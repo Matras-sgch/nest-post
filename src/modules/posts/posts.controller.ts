@@ -3,19 +3,20 @@ import { AuthGuard } from '@nestjs/passport';
 import { PostsService } from './posts.service';
 import { Post as PostEntity } from './post.entity';
 import { PostDto } from './post.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('posts')
 export class PostsController {
     constructor(private readonly postService: PostsService) { }
 
     @Get()
-    async findAll() {
+    async findAll() : Promise<any>{
         // get all posts in the db
         return await this.postService.findAll();
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<PostEntity> {
+    async findOne(@Param('id') id: number) : Promise<PostEntity> {
         // find the post with this id
         const post = await this.postService.findOne(id);
 
@@ -29,15 +30,17 @@ export class PostsController {
     }
 
     @UseGuards(AuthGuard('jwt'))
+    @ApiBearerAuth()
     @Post()
-    async create(@Body() post: PostDto, @Request() req): Promise<PostEntity> {
+    async create(@Body() post: PostDto, @Request() req) : Promise<PostEntity> {
         // create a new post and return the newly created post
         return await this.postService.create(post, req.user.id);
     }
 
     @UseGuards(AuthGuard('jwt'))
+    @ApiBearerAuth()
     @Put(':id')
-    async update(@Param('id') id: number, @Body() post: PostDto, @Request() req): Promise<PostEntity> {
+    async update(@Param('id') id: number, @Body() post: PostDto, @Request() req) : Promise<PostEntity> {
         // get the number of row affected and the updated post
         const { numberOfAffectedRows, updatedPost } = await this.postService.update(id, post, req.user.id);
 
@@ -52,6 +55,7 @@ export class PostsController {
     }
 
     @UseGuards(AuthGuard('jwt'))
+    @ApiBearerAuth()
     @Delete(':id')
     async remove(@Param('id') id: number, @Request() req) {
         // delete the post with this id

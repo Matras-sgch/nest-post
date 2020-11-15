@@ -25,12 +25,13 @@ async function bootstrap() {
     .setTitle('Rest-api example')
     .setDescription('by Marat Sergievich. With PostgreSQL and Sequelize')
     .setVersion('1.0')
+    .addBearerAuth({ in: 'header', type: 'http' })
     .build()
 
   const document = SwaggerModule.createDocument(app, options)
   // setup the swagger module 
   SwaggerModule.setup('api', app, document)
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
