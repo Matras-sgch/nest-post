@@ -1,3 +1,12 @@
+<h1>Little introduction</h1>
+<p>
+1: Sign Up { name: string, email: string, password: string }. 
+2: insert the token into the Authorize window. 
+3: Create post {title: string, body: string}.
+4: Update post {title: string, body: string}.
+</p>
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
